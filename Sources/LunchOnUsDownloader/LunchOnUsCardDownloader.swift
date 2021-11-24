@@ -1,7 +1,4 @@
 import Foundation
-#if canImport(FoundationNetworking)
-import FoundationNetworking
-#endif
 import SwiftBeanCountParserUtils
 
 /// Protocol to descibe an object which provides functions to download Lunch On Us Card data
