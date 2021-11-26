@@ -37,11 +37,15 @@ jobs:
       matrix:
         os:  ${{fromJson(needs.get_os.outputs.os_matrix)}}
     runs-on: ${{ matrix.os }}
-    env:
-      DEVELOPER_DIR: /Applications/Xcode_13.2.app/Contents/Developer
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
+    - name: "Select Xcode version"
+      if: ${{ matrix.os == macOS-11 }}
+      uses: devbotsxyz/xcode-select@v1
+      with:
+        beta: true
+        version: "13.2"
     - name: Install Swift
       uses: fwal/setup-swift@v1.9.0
     - name: Run tests
