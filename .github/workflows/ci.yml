@@ -48,6 +48,8 @@ jobs:
         version: "13.2"
     - name: Install Swift
       uses: fwal/setup-swift@v1.9.0
+      with:
+        swift-version: "5.5.2"
     - name: Run tests
       run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
     - name: Save PR number
