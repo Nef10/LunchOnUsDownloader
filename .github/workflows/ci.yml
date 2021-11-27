@@ -47,7 +47,7 @@ jobs:
         beta: true
         version: "13.2"
     - name: Run tests
-      run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
+      run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors --configuration debug -Xlinker -rpath -Xlinker "$(xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.5/macosx"
     - name: Save PR number
       if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
       run: |
