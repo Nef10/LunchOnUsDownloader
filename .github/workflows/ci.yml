@@ -20,10 +20,10 @@ jobs:
       run: |
         if [ -e .github/macos_only ]
         then
-            echo "::set-output name=os_matrix::['macOS-11']"
-            echo "::set-output name=coverage_os::macOS-11"
+            echo "::set-output name=os_matrix::['macOS-latest']"
+            echo "::set-output name=coverage_os::macOS-latest"
         else
-            echo "::set-output name=os_matrix::['macOS-11', 'ubuntu-latest']"
+            echo "::set-output name=os_matrix::['macOS-latest', 'ubuntu-latest']"
             echo "::set-output name=coverage_os::ubuntu-latest"
         fi
     outputs:
@@ -40,14 +40,10 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-    - name: "Select Xcode version"
-      if: ${{ matrix.os == 'macOS-11' }}
-      uses: devbotsxyz/xcode-select@v1
-      with:
-        beta: true
-        version: "13.2"
+    - name: Install Swift
+      uses: fwal/setup-swift@v1.11.0
     - name: Run tests
-      run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors --configuration debug -Xlinker -rpath -Xlinker "$(xcode-select -p)/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift-5.5/macosx"
+      run: swift test --enable-code-coverage -Xswiftc -warnings-as-errors
     - name: Save PR number
       if: ${{ matrix.os == needs.get_os.outputs.coverage_os }}
       run: |
